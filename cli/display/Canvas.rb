@@ -1,15 +1,21 @@
 class Canvas
 
+    attr_reader :width, :height
+
     def initialize(width=80, height=40)
         @chars = Array.new(width * height){' '}
+        @width = width
+        @height = height
     end
 
     def []=(x, y, z = nil)
         if z
             index = x + y * width
+            return if x > @width || y > @height
             value = z
         else
             index = x
+            return if index > @chars.size
             value = y
         end
         if value.respond_to? :chr
