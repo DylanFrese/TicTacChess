@@ -1,9 +1,13 @@
+require_relative 'AbstractBoard'
+
 class AtomBoard
+    include AbstractBoard
+
+    attr_reader :width, :height
     
     def initialize(width=3, height=3)
         @width = width
         @height = height
-        @winner = nil
         @subboards = Array.new(width * height) { Mark::BLANK }
     end
     
@@ -20,6 +24,15 @@ class AtomBoard
     end
     private :coerce
     
+    def [] (x, y = nil)
+        if y
+            index = x + y * width
+        else
+            index = x
+        end
+        @subboards[index]
+    end
+
     def []=(x, y, z = nil)
         index, value = coerce(x, y, z)
         @subboards[index] = value
