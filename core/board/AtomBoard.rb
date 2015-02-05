@@ -1,4 +1,4 @@
-class AtomBoard < Board
+class AtomBoard
     
     def initialize(width=3, height=3)
         @width = width
