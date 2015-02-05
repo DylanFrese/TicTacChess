@@ -4,7 +4,7 @@ class Mark
     include AbstractBoard
 
     def initialize(string)
-        @string = string
+        @string = string.chr
         @winner = value
     end
 
@@ -36,6 +36,10 @@ class Mark
 
     def blank?
         self == BLANK
+    end
+    
+    def chr
+        @string
     end
 
 end
