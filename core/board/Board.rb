@@ -1,7 +1,7 @@
 require_relative 'AbstractBoard'
 
 class Board
-    include AbstractBoard
+    include AbstractBoard, Enumerable
 
     attr_reader :width, :height
 
@@ -29,12 +29,17 @@ class Board
         end
     end
 
+    def each
+        return @subboards.each &proc if block_given?
+        @subboards.each
+    end
+
     def full?
         @subboards.all? {|board| board.full?}
     end
 
     def to_s
-        @subboards
+        @subboards.to_s
     end
 end
 
