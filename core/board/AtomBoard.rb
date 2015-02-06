@@ -24,6 +24,9 @@ class AtomBoard < Board
     
     def []=(x, y, z = nil)
         index, value = coerce(x, y, z)
+        if value == nil
+            value = Mark::BLANK
+        end
         @subboards[index] = value
         dirty = true
     end

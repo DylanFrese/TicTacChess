@@ -3,26 +3,6 @@ module AbstractBoard
 
     attr_writer :parent
     @parent = nil
-    @dirty = false
-
-    DEFAULT_WIN = Proc.new {|board|
-        check = Proc.new do |set|
-            set.all? {|x| x.value == set[0].value}
-        end
-        if board.square?
-            sets = board.rows + board.columns + board.diagonals
-        else
-            sets = board.rows + board.columns
-        end
-        sets.detect {|x| check[x]}[0].value
-    }
-
-    def dirty=(x)
-        @dirty = x
-        if x && @parent
-            @parent.dirty = true
-        end
-    end
 
     def column(x)
         Array.new(height) {|y| self[x, y]}
@@ -72,13 +52,7 @@ module AbstractBoard
     end
 
     def winner
-        check_for_winner if @dirty
         @winner
-    end
-
-    def check_for_winner(&block)
-        return if @winner
-        @winner = (block || DEFAULT_WIN)[self]
     end
 
     def spaces_same?(*spaces)

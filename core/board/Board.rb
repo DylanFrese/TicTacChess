@@ -1,18 +1,18 @@
 require_relative 'AbstractBoard'
 
 class Board
-    include AbstractBoard, Enumerable
+    include AbstractBoard
 
     attr_reader :width, :height
 
-    def initialize(width=3, height=3, levels=0)
+    def initialize(width=3, height=3, levels=1)
         @width = width
         @height = height
         @winner = nil
         if block_given?
             @subboards = Array.new(width * height) {proc[self]}
         else
-            if levels > 0
+            if levels > 1
                 @subboards = Array.new(width * height) {Board.new(width, height, levels - 1)}
             else
                 @subboards = Array.new(width * height) {AtomBoard.new(width, height)}
