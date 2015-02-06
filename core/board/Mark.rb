@@ -42,4 +42,8 @@ class Mark
         @string
     end
 
+    def depth
+        0
+    end
+
 end

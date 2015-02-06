@@ -1,4 +1,6 @@
 module AbstractBoard
+    include Enumerable
+
     attr_writer :parent
     @parent = nil
     @dirty = false
@@ -104,6 +106,12 @@ module AbstractBoard
     def root
         return @parent.root if @parent
         self
+    end
+
+    def depth
+        map do |subboard|
+            subboard.depth + 1
+        end.max
     end
 
 end
