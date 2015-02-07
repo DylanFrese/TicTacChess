@@ -10,7 +10,7 @@ class Board
         @height = height
         @winner = nil
         if block_given?
-            @subboards = Array.new(width * height) {proc[self]}
+            @subboards = Array.new(width * height) {|i| proc[i]}
         else
             if levels > 1
                 @subboards = Array.new(width * height) {Board.new(width, height, levels - 1)}
