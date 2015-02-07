@@ -2,7 +2,7 @@ class Canvas
 
     attr_reader :width, :height
 
-    def initialize(width=80, height=40)
+    def initialize(width = 80, height = 40)
         @chars = Array.new(width * height){' '}
         @width = width
         @height = height
@@ -33,4 +33,9 @@ class Canvas
         end
     end
 
+    def to_s
+        @chars.each_slice(width).map do |line|
+            line.join("")
+        end.join("\n")
+    end
 end
