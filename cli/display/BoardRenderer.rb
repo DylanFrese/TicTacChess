@@ -53,8 +53,8 @@ class BoardRenderer
         else
             @subrenderers.each_slice(@board.width).each_with_index do |row, j|
                 row.each_with_index do |renderer, i|
-                    xoff = @xoffsets[i] + x
-                    yoff = @yoffsets[j] + y
+                    xoff = @xoffsets[i] + x + @widths[i] / 2 - renderer.width / 2
+                    yoff = @yoffsets[j] + y + @heights[j] / 2 - renderer.height / 2
                     renderer.render(canvas, xoff, yoff)
                 end
             end
