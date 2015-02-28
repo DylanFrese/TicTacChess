@@ -42,6 +42,8 @@ class Game
         @current_player = @player_enum.next
     end
 
+    alias :next :next_player
+
     def move(move)
         valid? move
         @board[move.location] = move.player.mark
