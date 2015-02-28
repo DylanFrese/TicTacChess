@@ -17,7 +17,7 @@ class Player
         end
     end
 
-    private_class_method :generate_i
+    private_class_method :generate_i, :generate_m
 
     def self.generate(players)
         if players.is_a? Integer
