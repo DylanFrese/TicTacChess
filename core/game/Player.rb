@@ -35,4 +35,8 @@ class Player
         @mark = mark
         @name = properties.delete(:name) || "Player"
     end
+
+    def to_s
+        @name
+    end
 end
