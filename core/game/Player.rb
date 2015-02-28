@@ -8,7 +8,7 @@ class Player
         if players > SYMBOLS.size
             raise "Unable to generate more than #{SYMBOLS.size} players, please specify the marks yourself."
         end
-        return Marks.each_char.take(players).map {|char| Mark.new(char)}
+        return SYMBOLS.each_char.take(players).map {|char| Mark.new(char)}
     end
 
     def self.generate_m(marks)
