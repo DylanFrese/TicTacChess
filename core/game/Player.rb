@@ -29,7 +29,7 @@ class Player
         end
     end
 
-    attr_reader :mark :name
+    attr_reader :mark, :name
 
     def initialize(mark, properties = Hash.new)
         @mark = mark
