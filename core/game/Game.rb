@@ -38,7 +38,7 @@ class Game
     private :valid?
 
     def next_player
-        @current_player = @players_enum.next
+        @current_player = @player_enum.next
     end
 
     def move(move)
