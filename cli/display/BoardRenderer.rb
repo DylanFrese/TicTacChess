@@ -1,4 +1,5 @@
 require_relative 'MarkRenderer'
+require_relative 'Canvas'
 require_relative '../../core/board/Board'
 require_relative '../../core/board/Mark'
 
