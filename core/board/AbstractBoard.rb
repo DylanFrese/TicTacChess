@@ -56,13 +56,9 @@ module AbstractBoard
     end
 
     def spaces_same?(*spaces)
-        value = nil
-        spaces.flatten!
-        spaces.each do |space|
-            value ||= space
-            return false if value != space
-        end
-        return value
+        flattened = spaces.flatten
+        value = flattened.sample
+        return flattened.all? {|x| x == value} && value
     end
 
     def value(x = nil, y = nil)
