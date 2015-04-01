@@ -21,12 +21,14 @@ module AbstractBoard
     end
 
     def major_diagonal
-        raise "Diagonal not defined for a non-square board!" if !square?
+        raise TypeError,
+            "Diagonal not defined for a non-square board!" if !square?
         Array.new(size) {|x| self[x, x]}
     end
 
     def minor_diagonal
-        raise "Diagonal not defined for a non-square board!" if !square?
+        raise TypeError,
+            "Diagonal not defined for a non-square board!" if !square?
         Array.new(size) {|x| self[x, size - 1 - x]}
     end
 
@@ -35,7 +37,7 @@ module AbstractBoard
     end
 
     def size
-        raise "Size not defined for a non-square board!" if !square?
+        raise TypeError, "Size not defined for a non-square board!" if !square?
         return width
     end
 
