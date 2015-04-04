@@ -58,9 +58,18 @@ module AbstractBoard
     end
 
     def spaces_same?(*spaces)
-        flattened = spaces.flatten
-        value = flattened.sample
-        return flattened.all? {|x| x == value} && value
+        sample = flattened.first
+        if sample.is_a? Enumerable
+            spaces = value
+            sample = spaces.first
+        end
+        if sample.is_a? Integer
+            return spaces.all? {|index| value(index) == value(sample)} &&
+                value(sample)
+        else
+            return spaces.all? {|space| space.value == sample.value} &&
+                sample.value
+        end
     end
 
     def value(x = nil, y = nil)
