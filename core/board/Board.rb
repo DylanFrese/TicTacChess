@@ -44,6 +44,7 @@ class Board
             index = x
             value = y
         end
+        value ||= Mark::BLANK
         return [index, value]
     end
     
@@ -64,18 +65,12 @@ class Board
     
     def []=(x, y, z = nil)
         index, value = coerce(x, y, z)
-        if value == nil
-            value = Mark::BLANK
-        end
         set_check(index, value)
         @subboards[index] = value
     end
 
     def fill(x, y, z = nil)
         index, value = coerce(x, y, z)
-        if value == nil
-            value = Mark::BLANK
-        end
         set_check(index, value)
         if @subboards[index].blank?
             @subboards[index] = value
