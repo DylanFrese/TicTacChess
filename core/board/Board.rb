@@ -83,7 +83,7 @@ class Board
     end
 
     def each
-        return @subboards.each &proc if block_given?
+        return @subboards.each(&proc) if block_given?
         @subboards.each
     end
 
