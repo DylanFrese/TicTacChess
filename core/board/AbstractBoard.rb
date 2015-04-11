@@ -52,6 +52,7 @@ module AbstractBoard
 
     # Gets the 'major diagonal' of subboards, i.e., the diagnoal going from the
     # top-left to the bottom-right of the grid.
+    # @raise [TypeError] if the board is not square.
     # @return [Array<AbstractBoard>] an array of every subboard in the major
     #   diagonal.
     def major_diagonal
@@ -62,6 +63,7 @@ module AbstractBoard
 
     # Gets the 'minor diagonal' of subboards, i.e., the diagnoal going from the
     # top-right to the bottom-left of the grid.
+    # @raise [TypeError] if the board is not square.
     # @return [Array<AbstractBoard>] an array of every subboard in the minor
     #   diagonal.
     def minor_diagonal
