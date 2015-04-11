@@ -5,16 +5,23 @@ class Board
 
     attr_reader :width, :height
 
-    def initialize(width=3, height=3, levels=1)
+    def initialize(width=3, height=width, levels=nil)
         if width <= 0 || height <= 0
-            raise ArgumentError.new("Size must be positive")
+            raise ArgumentError.new("Size must be positive.")
+        end
+        if block_given? && levels
+            raise ArgumentError.new("Specifying levels has no meaning when a"\
+                                    "block is given.")
         end
         if levels < 0
-            raise ArgumentError.new("Levels must be positive")
+            raise ArgumentError.new("Levels must be positive.")
         end
+
         @width = width
         @height = height
         @winner = nil
+
+        levels ||= 1
         if block_given?
             array_proc = proc
         else
