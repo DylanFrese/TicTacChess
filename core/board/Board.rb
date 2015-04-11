@@ -48,9 +48,16 @@ class Board
     end
     
     def set_check(index, value)
-        raise TypeError.new("#{value} is not a type of Mark!") unless value.is_a? Mark
-        raise ArgumentError.new("Index #{index} is out of bounds!") if index >= @subboards.length
-        raise ArgumentError.new("The subboard at index #{index} is not of type Mark, and is immutable.") unless @subboards[index].is_a? Mark
+        if !value.is_a? Mark
+            raise TypeError.new("#{value} is not a type of Mark!")
+        end
+        if index >= @subboards.length
+            raise ArgumentError.new("Index #{index} is out of bounds!")
+        end
+        if !@subboards[index].is_a? Mark
+            raise ArgumentError.new("The subboard at index #{index}"\
+                                    " is not of type Mark, and is immutable.")
+        end
     end
 
     private :coerce
