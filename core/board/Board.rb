@@ -85,8 +85,12 @@ class Board
     end
 
     def each
-        return @subboards.each(&proc) if block_given?
-        @subboards.each
+        if block_given?
+            @subboards.each(&proc)
+            return nil
+        else
+            @subboards.each
+        end
     end
 
     def full?
