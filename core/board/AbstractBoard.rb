@@ -140,7 +140,7 @@ module AbstractBoard
     # it returns the value of this board, defined by the result of a call to
     # AbstractBoard#winner. If x and y are both not nil, it is the result of
     # self[x, y].value. Otherwise, it is the result of self[x].value.
-    # @param [Integer] x the index of the subboard. If y is nil, it is the
+    # @param [Integer] x the index of the subboard. If y is not nil, it is the
     #   x-index of the subboard. If it is nil, the result of this method is the
     #   value of this AbstractBoard.
     # @param [Integer] y the y-index of the subboard. May be nil.
