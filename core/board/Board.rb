@@ -27,9 +27,10 @@ class Board
     # spaces (Marks), but the number of subboards.
     #
     # If a block is passed in, the block is yielded to for every index in the
-    # subboards array, and the result assigned to that index. In this case, the
-    # levels argument has no meaning. It is possible to create irregular or
-    # uneven boards this way.
+    # subboards array, and the result assigned to that index. If the result is
+    # nil, it is assumed to mean Mark::BLANK. In this case, the levels argument
+    # has no meaning. It is possible to create irregular or uneven boards this
+    # way.
     #
     # @raise [ArgumentError] if the width or height is not positive
     # @raise [ArgumentError] if levels is defined when a block is given
@@ -67,7 +68,9 @@ class Board
                 array_proc = Proc.new {Mark::BLANK}
             end
         end
-        @subboards = Array.new(width * height) {|i| array_proc[i]}
+        @subboards = Array.new(width * height) do |i|
+            array_proc[i] || Mark::BLANK #Assume blank if received nil
+        end
         @subboards.each {|board| board.parent = self}
     end
 
