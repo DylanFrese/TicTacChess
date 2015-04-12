@@ -40,8 +40,6 @@ class Board
     #   assumed to be 1, meaning a regular Board that is 9x9 Marks will be
     #   created.
     def initialize(width=3, height=width, levels=nil)
-        levels ||= 1
-
         if width <= 0 || height <= 0
             raise ArgumentError.new("Size must be positive.")
         end
@@ -49,6 +47,8 @@ class Board
             raise ArgumentError.new("Specifying levels has no meaning when a"\
                                     "block is given.")
         end
+
+        levels ||= 1
         if levels < 0
             raise ArgumentError.new("Levels must be positive.")
         end
