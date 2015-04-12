@@ -27,5 +27,6 @@ class MarkRenderer
         x ||= 0
         y ||= 0
         canvas[x, y] = mark.chr
+        canvas
     end
 end
