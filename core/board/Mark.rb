@@ -19,7 +19,7 @@ class Mark
     end
 
     def [](x, y=nil)
-        self
+        raise TypeError.new("A Mark has no subboards.")
     end
 
     def value
