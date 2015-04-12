@@ -3,10 +3,26 @@ require_relative 'Canvas'
 require_relative '../../core/board/Board'
 require_relative '../../core/board/Mark'
 
+# A class to render one given Board. This class recursively creates
+# BoardRenderers or MarkRenderers for each subboard as appropriate.
+#
+# This class is stateful and instances should only be created once for a given
+# Board.
+# @author Dylan Frese
 class BoardRenderer
 
-    attr_reader :board, :width, :height
+    # @return [AbstractBoard] the board being rendered
+    attr_reader :board
+    # @return [Integer] the width, in characters, of result of the rendering
+    attr_reader :width
+    # @return [Integer] the height, in characters, of result of the rendering
+    attr_reader :height
 
+    # Creates a new BoardRenderer with the specified board as a rendering
+    # source. The initializer creates a BoardRenderer or MarkRenderer, as
+    # appropiate, for each subboard of the specified board. The width and
+    # height are then recursively calculated from the created renderers.
+    # @param [AbstractBoard] board the board to be rendered
     def initialize(board)
         @board = board
         @subrenderers = Array.new(board.spaces) do |i| 
@@ -34,6 +50,30 @@ class BoardRenderer
         @yoffsets = yoffsets
     end
 
+    # Renders the board onto a Canvas at the specified location, or creates a
+    # Canvas if none is specified. 
+    #
+    # The specification of the result of the render is as follows:
+    # * Each column of subboards is assigned a width, which is determined by
+    #   taking the max width of the BoardRenderer for every subboard in that
+    #   column
+    # * Each row of subboards is assigned a height, determined likewise
+    # * Between the renderering of subboards is a gap the size of the depth of
+    #   that subboard take one. That gap is referred to as a 'gutter'.
+    #   Characters located in the gutter will not be modified, it is best to
+    #   leave them as spaces.
+    # * The location for every subboard to be rendered, it's x-offset and
+    #   y-offset, is determined by summing the width of every column and gutter
+    #   to the left, and by summing the height of every row and gutter above,
+    #   respectively.
+    # * The subboards are then rendered at that location. If any subboard is a
+    #   Mark, then the character that represents that Mark is rendered at that
+    #   location.
+    #
+    # @param [Canvas] canvas the Canvas to render unto. If nil, one is created.
+    # @param [Integer] x the x-index to render on the specified Canvas
+    # @param [Integer] y the y-index to render on the specified Canvas
+    # @return [Canvas] the canvas used for rendering
     def render(canvas = nil, x = nil, y = nil)
         canvas ||= Canvas.new(width, height)
         x ||= 0
@@ -53,6 +93,9 @@ class BoardRenderer
     end
 
     private
+    # Gets a row of subrenderers.
+    # @param [Integer] y the y-index of the desired row
+    # @return [Enumerator<Canvas>] an Enumerator of subrenderers in that row
     def row(y)
         Enumerator.new do |yielder|
             (0 ... @board.width).each do |x|
@@ -61,6 +104,9 @@ class BoardRenderer
         end
     end
 
+    # Gets a column of subrenderers.
+    # @param [Integer] x the x-index of the desired column
+    # @return [Enumerator<Canvas>] an Enumerator of subrenderers in that column
     def column(x)
         Enumerator.new do |yielder|
             (0 ... @board.height).each do |y|
@@ -69,6 +115,9 @@ class BoardRenderer
         end
     end
 
+    # Gets all rows of subrenderers.
+    # @return [Enumerator<Enumerator<Canvas>>] an Enumerator containing every
+    #   row.
     def rows
         Enumerator.new do |yielder|
             (0 ... @board.height).each do |y|
@@ -77,6 +126,9 @@ class BoardRenderer
         end
     end
 
+    # Gets all columns of subrenderers.
+    # @return [Enumerator<Enumerator<Canvas>>] an Enumerator containing every
+    #   column.
     def columns
         Enumerator.new do |yielder|
             (0 ... @board.width).each do |x|
@@ -85,6 +137,11 @@ class BoardRenderer
         end
     end
     
+    # Gets an array of offsets from a list of widths/heights, adding the gutter
+    # as appropriate.
+    # @param [Array<Integer>] list the list of sizes to use to total the
+    #   offsets
+    # @return [Array<Integer>] an array of offsets calculated from the list
     def offsets(list)
         sum = 0
         array = Array.new
@@ -95,10 +152,14 @@ class BoardRenderer
         array
     end
 
+    # Calculates the offsets for the widths of board renderers.
+    # @return [Array<Integer>] the x-offsets of the subboards
     def xoffsets
         offsets(@widths)
     end
 
+    # Calculates the offsets for the heights of board renderers.
+    # @return [Array<Integer>] the y-offsets of the subboards
     def yoffsets
         offsets(@heights)
     end
