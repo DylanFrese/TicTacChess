@@ -9,7 +9,8 @@ class MarkRenderer
         end
     end
 
-    def board
+ 
+    def mark
         @board[@index]
     end
     
@@ -22,9 +23,9 @@ class MarkRenderer
     end
 
     def render(canvas = nil, x = nil, y = nil)
-        canvas ||= Canvas.new(width(board), height(board))
+        canvas ||= Canvas.new(1, 1)
         x ||= 0
         y ||= 0
-        canvas[x, y] = board.chr
+        canvas[x, y] = mark.chr
     end
 end
