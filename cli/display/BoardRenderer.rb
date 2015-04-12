@@ -5,14 +5,6 @@ require_relative '../../core/board/Mark'
 
 class BoardRenderer
 
-    def self.size(renderers, gutter)
-        renderers.map do |row|
-            row.reduce(0) do |sum, renderer|
-                sum + renderer.width + gutter
-            end
-        end.max
-    end
-
     attr_reader :board, :width, :height
 
     def initialize(board)
