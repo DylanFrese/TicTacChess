@@ -9,7 +9,6 @@ class BoardRenderer
 
     def initialize(board)
         @board = board
-        @mark = board.is_a? Mark
         @subrenderers = Array.new(board.spaces) do |i| 
             subboard = board[i]
             if subboard.is_a? Mark
@@ -33,10 +32,6 @@ class BoardRenderer
         end
         @xoffsets = xoffsets
         @yoffsets = yoffsets
-    end
-
-    def mark?
-        @mark
     end
 
     def render(canvas = nil, x = nil, y = nil)
