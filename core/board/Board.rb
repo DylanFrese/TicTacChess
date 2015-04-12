@@ -1,4 +1,5 @@
 require_relative 'AbstractBoard'
+require_relative 'Mark'
 
 # A concrete implementation of the AbstractBoard. This implementation uses a
 # standard Ruby array to store its subboards. Its initializer allows for a
