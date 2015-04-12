@@ -59,17 +59,23 @@ class Mark
         @string
     end
 
-    # @return [Boolean] whether this Mark is equal to Mark::BLANK.
-    def blank?
-        self == BLANK
-    end
-    
     # The string representation of this Mark.
     # @return [String] the string representation of this Mark
     def chr
         @string
     end
 
+    # The string representation of this Mark.
+    # @return [String] the string representation of this Mark
+    def inspect
+        @string
+    end
+
+    # @return [Boolean] whether this Mark is equal to Mark::BLANK.
+    def blank?
+        self == BLANK
+    end
+    
     # Returns 0, as a Mark has no subboards.
     # @return [Integer] 0
     def depth

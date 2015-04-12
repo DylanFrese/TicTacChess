@@ -188,6 +188,12 @@ class Board
         @subboards.all? {|board| board.full?}
     end
 
+    # @return [String] a more detailed string representation of this board.
+    def inspect
+        "Board <Width: #{width}, Height: #{height}, "\
+        "Subboards: #{@subboards.inspect}>"
+    end
+
     # @return [String] a string representation of this board.
     def to_s
         @subboards.to_s
