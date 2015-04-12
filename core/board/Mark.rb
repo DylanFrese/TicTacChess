@@ -11,11 +11,11 @@ class Mark
     BLANK = Mark.new(".")
 
     def width
-        1
+        0
     end
 
     def height
-        1
+        0
     end
 
     def [](x, y=nil)
