@@ -66,9 +66,9 @@ class BoardRenderer
     #   y-offset, is determined by summing the width of every column and gutter
     #   to the left, and by summing the height of every row and gutter above,
     #   respectively.
-    # * The subboards are then rendered at that location. If any subboard is a
-    #   Mark, then the character that represents that Mark is rendered at that
-    #   location.
+    # * The subboards are then rendered centred at that location. If any
+    #   subboard is a Mark, then the character that represents that Mark is
+    #   rendered at that location.
     #
     # @param [Canvas] canvas the Canvas to render unto. If nil, one is created.
     # @param [Integer] x the x-index to render on the specified Canvas
