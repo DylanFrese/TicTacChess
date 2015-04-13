@@ -15,7 +15,7 @@ class Player
     #   the number of characters in the SYMBOLS constant
     # @param [Integer] number number of Marks to generate.
     # @return [Array<Mark>] an array of Marks of the requested length
-    def self.generate_i(number)
+    def self.generate_marks(number)
         if number > SYMBOLS.size
             raise "Unable to generate more than #{SYMBOLS.size} players,"\
                     "please specify the marks yourself."
@@ -28,37 +28,45 @@ class Player
     # @param [Enumerable<Mark>] marks a list of Marks to use as the players'
     #   assigned Marks.
     # @return [Array<Player>] an array of the generated players.
-    def self.generate_m(marks)
+    def self.generate_players_from_marks(marks)
         marks.map.each_with_index do |mark, index|
             Player.new(mark, :name => "Player #{index + 1}")
         end
     end
 
-    private_class_method :generate_i, :generate_m
+    private_class_method :generate_marks, :generate_players_from_marks
 
     # Generate some players.
     #
-    # This method may take an Integer, a String, or a list of Marks. If passed
-    # an Integer, the parameter corresponds to the number of players generated.
-    # If passed a String, it is interpreted to be a list of symbols, where each
-    # character is a symbol, of players' Marks. If passed an array of Marks,
-    # each Mark is assigned to a player.
+    # This method may take an Integer, a String, or a list of Marks or Strings.
+    # If passed an Integer, the parameter corresponds to the number of players
+    # generated.  If passed a String, it is interpreted to be a list of
+    # symbols, where each character is a symbol, of players' Marks. If passed
+    # an array of Marks, each Mark is assigned to a player. If passed an array
+    # of Strings, each String is taken to be a list of symbols of players'
+    # Marks.
     #
     # If passed an Integer, the Marks assigned to the generated players
     # correspond to the characters in Player::SYMBOLS.
     #
     # In each case, the names of each player are "Player #" where the number
     # is the index, starting at 1, of the player in the list.
-    # @param [Integer,String,Array<Mark>] players the players to generate
+    # @param [Integer,String,Array<Mark,String>] players the players to
+    #   generate
     # @return [Array<Player>] a list of players
     def self.generate(players)
         if players.is_a? Integer
-            return generate_m(generate_i(players))
+            marks = generate_marks(players)
         elsif players.is_a? String
-            return generate_m(players.each_char.map {|char| Mark.new(char)})
-        elsif players[0].is_a? Mark
-            return generate_m(players)
+            marks = players.each_char.map {|char| Mark.new(char)}
+        elsif players.is_a? Array
+            if players[0].is_a? Mark
+                marks = players
+            elsif players[0].is_a? String
+                marks = players.map {|string| Mark.new(string)}
+            end
         end
+        generate_players_from_marks(marks)
     end
 
     # @return [Mark] the Mark associated with this player
