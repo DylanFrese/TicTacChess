@@ -51,10 +51,12 @@ class Player
     #
     # In each case, the names of each player are "Player #" where the number
     # is the index, starting at 1, of the player in the list.
+    # @raise [TypeError] if passed an unsupported Type
     # @param [Integer,String,Array<Mark,String>] players the players to
     #   generate
     # @return [Array<Player>] a list of players
     def self.generate(players)
+        marks = nil
         if players.is_a? Integer
             marks = generate_marks(players)
         elsif players.is_a? String
@@ -65,6 +67,10 @@ class Player
             elsif players[0].is_a? String
                 marks = players.map {|string| Mark.new(string)}
             end
+        end
+        if marks == nil
+            raise TypeError, "Unable to handle type '#{players.class}'. "\
+                             "Please see documentation for supported types."
         end
         generate_players_from_marks(marks)
     end
