@@ -22,7 +22,7 @@ class Player
     def self.generate(players)
         if players.is_a? Integer
             return generate_m(generate_i(players))
-        elsif players[0].is_a? String
+        elsif players.is_a? String
             return generate_m(players.each_char.map {|char| Mark.new(char)})
         elsif players[0].is_a? Mark
             return generate_m(players)
