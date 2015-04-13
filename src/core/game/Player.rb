@@ -97,4 +97,9 @@ class Player
     def to_s
         @name
     end
+
+    # @return [String] a detailed String representation of the player
+    def inspect
+        "<\"#{name}\" with mark \'#{mark}\'>"
+    end
 end
