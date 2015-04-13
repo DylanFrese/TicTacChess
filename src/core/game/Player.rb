@@ -103,7 +103,7 @@ class Player
         end
 
         @mark = mark
-        @name = properties.delete(:name) || "Player"
+        @name = properties[:name] || "Player"
     end
 
     # @return [String] the name of the player
