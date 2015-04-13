@@ -84,16 +84,24 @@ class Player
     # specified as a Hash of symbols to values.
     #
     # Currently, the supported properties are:
-    #   :name => String: the name of the player
-    # @raise [TypeError] if mark is not of type Mark
-    # @param [Mark] mark the mar to associate with this player
+    #   :name => String
+    #       the name of the player
+    #
+    # If the 'mark' parameter is a String, a Mark will be created with it as a
+    # symbol.
+    # @raise [TypeError] if mark is not of type Mark or String
+    # @param [Mark,String] mark the mark to associate with this player
     # @param [Hash<Symbol => Object>] properties a hash of various properties
     #   of the player
     def initialize(mark, properties = Hash.new)
-        if !mark.is_a? Mark
-            raise TypeError, "Player must be initialized with a Mark object!"\
-                             " Received '#{mark.class}' instead."
+        if mark.is_a? String
+            mark = Mark.new(mark)
         end
+        if !mark.is_a? Mark
+            raise TypeError, "Player must be initialized with a Mark or "\
+                             "String object! Received '#{mark.class}' instead."
+        end
+
         @mark = mark
         @name = properties.delete(:name) || "Player"
     end
