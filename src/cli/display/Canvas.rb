@@ -40,6 +40,7 @@ class Canvas
             return if index > @chars.size
             value = y
         end
+        return if index >= @chars.size
         if value.respond_to? :chr
             @chars[index] = value.chr
         else
