@@ -3,20 +3,52 @@ require_relative '../board/Mark'
 require_relative 'Player'
 
 class Game
-    attr_reader :players, :current_player
-
-    @moves = Array.new
 
     def initialize(players=2, board=Board.new)
         @board = board
         @players = players_to_a players
-        @player_enum = @players.cycle
-        next_player
+        @current_player = 0
+        @moves = Array.new
     end
 
     def numplayers
         players.size
     end
+
+    def players
+        @players.dup
+    end
+
+    def current_player
+        @players[@current_player]
+        nil
+    end
+
+    def next_player
+        @current_player += 1
+        @current_player = 0 if @current_player == @players.size
+        nil
+    end
+
+    def set_current_player(player)
+        if player.is_a? Player
+            index = @players.index player
+            raise ArgumentError, "Player '#{player}' "\
+                                 "is not a player of this game." if !index
+            @current_player = index
+        elsif player.is_a? Integer
+            if player >= @current_players.size
+                raise ArgumentError, "Player index '#{player}' "\
+                                     "is out of bounds!" 
+            end
+            @current_player = player
+        else
+            raise TypeError, "Player is a #{player.class}, expected Player "\
+                             "or Integer."
+        end
+    end
+
+    alias :next :next_player
 
     def players_to_a(players)
         if players.is_a? Integer
@@ -31,18 +63,18 @@ class Game
     end
             
     def valid?(move)
-        raise "#{move.player.name} is not the current player!" if @current_player != move.player
+        if player >= @current_players.size
+            raise "#{move.player.name} is not the current player!"
+        end
         atom = move.atom
-        raise "Move does not correspond to the current board!" if !atom.root.equal? @board
-        raise "Move is invalid!" if move.location >= atom.spaces
+        if !atom.root.equal? @board
+            raise "Move does not correspond to the current board!"
+        end
+        if move.location >= atom.spaces
+            raise "Move is invalid!"
+        end
     end
     private :valid?
-
-    def next_player
-        @current_player = @player_enum.next
-    end
-
-    alias :next :next_player
 
     def move(move)
         valid? move
