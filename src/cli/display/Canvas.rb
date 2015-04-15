@@ -63,6 +63,35 @@ class Canvas
         end
     end
 
+    # 'Clears' the Canvas inside the specified rectangle with the specified
+    # char. This sets every space to that character.
+    # @param [Integer] x the location of the left edge of the rectangle
+    # @param [Integer] y the location of the top edge of the rectangle
+    # @param [Integer] width the width of the rectangle
+    # @param [Integer] height the height of the rectangle
+    # @return [void]
+    def clear(x=0, y=0, width=width, height=height, char=" ")
+        x.upto(width) do |xpos|
+            y.upto(height) do |ypos|
+                self[xpos, ypos] = char
+            end
+        end
+        nil
+    end
+
+    # Renders a string on the Canvas at the specified location. This does not
+    # do string splitting, and will end if it hits the edge of the Canvas.
+    # @param [String,#each_char] string the string to be rendered
+    # @param [Integer] x the x-position of the first character of the string
+    # @param [Integer] y the y-position of the first character of the string
+    # @return [void]
+    def render_string(string, x, y)
+        string.each_char.each_with_index do |char, index|
+            return if x + index >= width
+            self[x + index, y] = char
+        end
+    end
+
     # Returns the string representation of this Canvas.
     #
     # The representation is each line of characters joined by a newline.
