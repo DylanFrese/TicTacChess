@@ -191,6 +191,30 @@ class Board
         @subboards.all? {|board| board.full?}
     end
 
+    # Do a deep clone of the board. This duplicates all subboards in the
+    # \@subboards array.
+    # @param [Board] other the board we're copying from
+    # @return [Board] a new (deep) copy of the original board
+    def initialize_dup(other)
+        super(other)
+
+        #Do a deep copy of the subboards
+        @subboards = @subboards.map {|subboard| subboard.dup}
+    end
+
+    # Do a deep clone of the board. This duplicates all subboards in the
+    # \@subboards array.
+    # @param [Board] other the board we're copying from
+    # @return [Board] a new (deep) copy of the original board
+    def initialize_clone(other)
+        super(other)
+
+        #Do a deep copy of the subboards
+        @subboards = @subboards.map {|subboard| subboard.clone}
+    end
+
+    protected :initialize_copy
+
     # @return [String] a more detailed string representation of this board.
     def inspect
         "Board <Width: #{width}, Height: #{height}, "\
