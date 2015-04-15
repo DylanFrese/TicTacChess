@@ -76,6 +76,10 @@ class Game
     end
     private :valid?
 
+    def board
+        @board
+    end
+
     def move(move)
         valid? move
         @board[move.location] = move.player.mark
