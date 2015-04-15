@@ -87,6 +87,10 @@ class Game
         next_player
     end
 
+    def last_move
+        @moves.last
+    end
+
     def undo(num=1)
         raise "Nothing to undo!" if @moves.empty?
         raise "Cannot undo #{num} times!" if @moves.size < num
