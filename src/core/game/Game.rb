@@ -64,14 +64,16 @@ class Game
             
     def valid?(move)
         if player >= @current_players.size
-            raise "#{move.player.name} is not the current player!"
+            raise InvalidMoveError.new(move), 
+                "#{move.player.name} is not the current player!"
         end
         atom = move.atom
         if !atom.root.equal? @board
-            raise "Move does not correspond to the current board!"
+            raise InvalidMoveError.new(move),
+                "Move does not correspond to the current board!"
         end
         if move.location >= atom.spaces
-            raise "Move is invalid!"
+            raise InvalidMoveError.new(move), "Move location is out of bounds."
         end
     end
     private :valid?
