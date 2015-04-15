@@ -35,9 +35,8 @@ class Board
     # @raise [ArgumentError] if the width or height is not positive
     # @raise [ArgumentError] if levels is defined when a block is given
     # @raise [ArgumentError] if levels is negative
-    # @param [Integer] width the width of the board. By default, this is 3.
-    # @param [Integer] height the height of the board. By default, this is the
-    #   same as the width.
+    # @param [Integer] width the width of the board
+    # @param [Integer] height the height of the board
     # @param [Integer] levels the number of levels of recursion. If nil, it is
     #   assumed to be 1, meaning a regular Board that is 9x9 Marks will be
     #   created.
@@ -104,7 +103,7 @@ class Board
     # @param x the first parameter
     # @param y the second parameter
     # @param z the third parameter
-    # @return [Array] an index, value pair.
+    # @return [Array] an index, value pair
     def coerce(x, y, z=nil)
         if z
             index = x + y * width
@@ -124,9 +123,9 @@ class Board
     # @raise [TypeError] if value is not a Mark
     # @raise [ArgumentError] if the index is out of bounds
     # @raise [ArgumentError] if the subboard at the specified index is not of
-    #   type Mark.
+    #   type Mark
     # @param [Integer] index the index of the subboard that is being set
-    # @param [Mark, Object] value the value to check against.
+    # @param [Mark, Object] value the value to check against
     # @return [void]
     def set_check(index, value)
         if !value.is_a? Mark
@@ -186,18 +185,42 @@ class Board
     # Determines whether the board is 'full' or not. A board is full when all
     # of its subboards are non-blank Marks or other boards which are full. This
     # is a recursive method.
-    # @return [Boolean] whether or not this board is full.
+    # @return [Boolean] whether or not this board is full
     def full?
         @subboards.all? {|board| board.full?}
     end
 
-    # @return [String] a more detailed string representation of this board.
+    # Do a deep clone of the board. This duplicates all subboards in the
+    # \@subboards array.
+    # @param [Board] other the board we're copying from
+    # @return [Board] a new (deep) copy of the original board
+    def initialize_dup(other)
+        super(other)
+
+        #Do a deep copy of the subboards
+        @subboards = @subboards.map {|subboard| subboard.dup}
+    end
+
+    # Do a deep clone of the board. This duplicates all subboards in the
+    # \@subboards array.
+    # @param [Board] other the board we're copying from
+    # @return [Board] a new (deep) copy of the original board
+    def initialize_clone(other)
+        super(other)
+
+        #Do a deep copy of the subboards
+        @subboards = @subboards.map {|subboard| subboard.clone}
+    end
+
+    protected :initialize_copy
+
+    # @return [String] a more detailed string representation of this board
     def inspect
         "Board <Width: #{width}, Height: #{height}, "\
         "Subboards: #{@subboards.inspect}>"
     end
 
-    # @return [String] a string representation of this board.
+    # @return [String] a string representation of this board
     def to_s
         @subboards.to_s
     end
