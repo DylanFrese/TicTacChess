@@ -13,6 +13,7 @@ class Client
         @data = StringIO.new
         @queue = Array.new
         @last_received = Time.now
+        @last_heartbeat = Time.now
     end
 
     def event
@@ -29,6 +30,7 @@ class Client
 
     def update
         if heartbeat?
+            @last_heartbeat = Time.now
             @socket.write(YAML::dump(Heartbeat.new) + "\0")
         end
 
@@ -64,6 +66,10 @@ class Client
 
     def write string
         @socket.write string
+    end
+
+    def heartbeat?
+        Time.now - @last_heartbeat > 60
     end
 
     def stale?
