@@ -49,8 +49,9 @@ class Client
                         set_name(event)
                     elsif !user
                         raise ArgumentError, "First event must set user!"
+                    else
+                        @queue << event
                     end
-                    @queue << event
                 else
                     @data << char
                     @last_received = Time.now
