@@ -47,6 +47,7 @@ class Client
                     event = YAML::load(yaml)
                     if event.is_a? UserSet
                         set_name(event)
+                    elsif event.is_a? Heartbeat
                     elsif !user
                         raise ArgumentError, "First event must set user!"
                     else
