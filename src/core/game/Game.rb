@@ -1,6 +1,8 @@
 require_relative '../board/Board'
 require_relative '../board/Mark'
 require_relative 'Player'
+require_relative 'event/Move'
+require_relative 'event/InvalidMoveError.rb'
 
 class Game
 
