@@ -69,13 +69,15 @@ class Game
             raise InvalidMoveError.new(move), 
                 "#{move.player.name} is not the current player!"
         end
-        atom = move.atom
-        if !atom.root.equal? @board
+        begin
+            if !board.drill(move.location)[move.atom].is_a? Mark
+                raise InvalidMoveError.new(move),
+                    "#{move.location} is an invalid location! Moves must "\
+                    "change only Marks."
+            end
+        rescue
             raise InvalidMoveError.new(move),
-                "Move does not correspond to the current board!"
-        end
-        if move.location >= atom.spaces
-            raise InvalidMoveError.new(move), "Move location is out of bounds."
+                "#{move.location} is an invalid location!"
         end
     end
     private :valid?
