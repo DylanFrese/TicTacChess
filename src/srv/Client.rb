@@ -73,7 +73,7 @@ class Client
     end
 
     def stale?
-        Time.now - @last_recieved > 300
+        Time.now - @last_received > 300
     end
 
     def set_name(event)
