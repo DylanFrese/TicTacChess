@@ -2,7 +2,7 @@
 # information about the sender, the recipients, and the content of the message
 # itself.
 # @author Dylan Frese
-class Message
+class Message < Event
 
     # @return [String] the content of the message
     attr_reader :message
@@ -30,6 +30,8 @@ class Message
     # @param [String,Hash<String=>String>] sender the sender of the message
     # @param [String,Array<String>] recipients the intended recipient(s)
     def initialize(message, sender, recipients)
+        super(:CHAT_MESSAGE_SENT, 3)
+
         @message = message
         @sender = sender
         @recipietns = recipients
