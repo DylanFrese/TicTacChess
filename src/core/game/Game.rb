@@ -65,7 +65,7 @@ class Game
     end
             
     def valid?(move)
-        if player >= @current_players.size
+        if move.player != @players[@current_player]
             raise InvalidMoveError.new(move), 
                 "#{move.player.name} is not the current player!"
         end
