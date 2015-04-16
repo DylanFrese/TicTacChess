@@ -28,6 +28,14 @@ class Client
     end
 
     def update
+        if heartbeat?
+            @socket.write(YAML::dump(Heartbeat.new) + "\0")
+        end
+
+        if stale?
+            raise IOError, "Client timed out."
+        end
+
         begin
             loop do
                 char = @socket.read_nonblock(1)
@@ -47,14 +55,6 @@ class Client
                 end
             end
         rescue IO::WaitReadable
-        end
-        
-        if heartbeat?
-            @socket.write(YAML::dump(Heartbeat.new) + "\0")
-        end
-
-        if stale?
-            raise IOError, "Client timed out."
         end
     end
 
