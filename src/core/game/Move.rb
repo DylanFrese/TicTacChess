@@ -1,8 +1,10 @@
+require_relative 'Event'
+
 # This class represents a move made, or to be made on a certain board.
 # Formally, this encapsulates a request to set a Mark at a certain location on
 # the specified board to the Mark of the given player.
 # @author Dylan Frese
-class Move
+class Move < Event
 
     # @return [AbstractBoard] the board on which this Move is to be made
     attr_reader :board
@@ -23,6 +25,8 @@ class Move
     # @param [AbstractBoard] board the board on which the move is made
     # @param [Player] player the player making the move
     def initialize(location, board, player)
+        super(:GAME_MOVE, 1)
+
         @board = board
         @location = location
         @player = player
