@@ -53,6 +53,14 @@ class Client
         end
     end
 
+    def close
+        @socket.close
+    end
+
+    def write string
+        @socket.write string
+    end
+
     def stale?
         Time.now - @last_recieved > 300
     end
