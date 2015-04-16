@@ -1,4 +1,5 @@
 require_relative '../core/event/UserSet'
+require_relative '../core/event/Heartbeat'
 require 'stringio'
 require 'yaml'
 #assume all events will be required before this is loaded
@@ -48,6 +49,10 @@ class Client
         rescue IO::WaitReadable
         end
         
+        if heartbeat?
+            @socket.write(YAML::dump(Heartbeat.new) + "\0")
+        end
+
         if stale?
             raise IOError, "Client timed out."
         end
