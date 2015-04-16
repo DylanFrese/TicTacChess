@@ -21,7 +21,7 @@ class Client
     end
 
     def event?
-        @queue.empty?
+        !@queue.empty?
     end
 
     def pop
