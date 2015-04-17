@@ -1,5 +1,5 @@
 require_relative 'Game'
-require_relative 'InvalidMoveError'
+require_relative '../event/InvalidMoveError'
 
 class StandardGame < Game
 
