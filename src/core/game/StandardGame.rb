@@ -13,25 +13,12 @@ class StandardGame < Game
     end
 
     def move(move)
-        subboard = find_subboard(move.atom)
+        subboard = board.drill(move.location)
         if current_board && subboard != current_board
             errormsg = "Move must be on the current board."
             raise InvalidMoveError.new(move), errormsg
         end
         @current_board = subboard
         super(move)
-    end
-
-    def find_subboard(board)
-        subboard = board
-        loop do
-            parent = subboard.parent
-            if !parent
-                raise ArgumentError, "Board #{board} is not contained within "\
-                                     "this game."
-            end
-            return subboard if parent == board
-            subboard = parent
-        end
     end
 end
