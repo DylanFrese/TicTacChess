@@ -1,6 +1,8 @@
 require_relative 'BoardRenderer'
 
 class StandardRenderer
+
+    attr_accessor :message
     
     def initialize(game, chat=nil)
         @game = game
@@ -53,7 +55,6 @@ class StandardRenderer
     end
 
     def render_chat
-        p @chat
         return if @last_message && @last_message.equal?(@chat.first)
         @canvas.clear(@chat_separator, 0,
                       width - @chat_separator - 1, height + 1)
