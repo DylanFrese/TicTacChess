@@ -53,14 +53,10 @@ class Game
     alias :next :next_player
 
     def players_to_a(players)
-        if players.is_a? Integer
+        if players.is_a?(Array) && players[0].is_a?(Player)
+            return players.dup
+        else
             return Player.generate(players)
-        elsif players.is_a? Array
-            if players[0].is_a? Player
-                return players.dup
-            elsif players[0].is_a? Mark or players[0].is_a? String
-                return Player.generate(players)
-            end
         end
     end
 
