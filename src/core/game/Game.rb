@@ -23,7 +23,6 @@ class Game
 
     def current_player
         @players[@current_player]
-        nil
     end
 
     def next_player
