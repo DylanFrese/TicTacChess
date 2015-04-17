@@ -41,7 +41,7 @@ class Game
         elsif player.is_a? Integer
             if player >= @current_players.size
                 raise ArgumentError, "Player index '#{player}' "\
-                                     "is out of bounds!" 
+                                     "is out of bounds!"
             end
             @current_player = player
         else
@@ -63,10 +63,10 @@ class Game
             end
         end
     end
-            
+
     def valid?(move)
         if move.player != @players[@current_player]
-            raise InvalidMoveError.new(move), 
+            raise InvalidMoveError.new(move),
                 "#{move.player.name} is not the current player!"
         end
         begin
