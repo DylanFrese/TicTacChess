@@ -176,4 +176,16 @@ module AbstractBoard
         end.max
     end
 
+    # "Drills down" to a particular descendant of this board, by using each
+    # element of an array as a successive index.
+    # @example
+    #   board.drill([3, 4, 1]) is equivalent to board[3][4][1].
+    # @param [Array<Integer>] subboards an array of successive indices to apply
+    # @return [AbstractBoard] the selected subboard
+    def drill(subboards)
+        subboards.reduce(self) do |subboard, i|
+            subboard[i]
+        end
+    end
+
 end
