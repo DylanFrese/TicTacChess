@@ -85,12 +85,10 @@ class GameServer
         @clients.each do |client|
             begin
                 client.update
-                puts client.event?
                 process(client, client.pop) if client.event?
             rescue IOError => exception
                 drop_client(client)
             rescue => exception #If there was a failure reading
-                raise exception
                 send_fail(client, exception)
             end
         end
